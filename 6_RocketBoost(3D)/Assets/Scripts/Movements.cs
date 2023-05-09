@@ -11,7 +11,7 @@ public class Movements : MonoBehaviour
     [SerializeField] float thrustAmount = 1f;
     [SerializeField] float rotationAmount = 1f;
     [SerializeField] AudioClip mainEngine;
-    
+
     [SerializeField] ParticleSystem leftThrustParticle;
     [SerializeField] ParticleSystem rightThrustParticle;
     [SerializeField] ParticleSystem thrustParticle;
@@ -24,12 +24,13 @@ public class Movements : MonoBehaviour
 
     void Update()
     {
-        ProcessThrust(); 
+        ProcessThrust();
         ProcessRotation();
     }
 
     void ProcessThrust()
     {
+
         if (Input.GetKey(KeyCode.Space))
         {
             Thrusting();
@@ -104,8 +105,9 @@ public class Movements : MonoBehaviour
 
     void ApplyRotation(float rotationThisFrame)
     {
-        rocketBody.freezeRotation = true;
+        rocketBody.freezeRotation = true;  //  this freezes the rotations of physics system so that we can apply our rotation
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
-        rocketBody.freezeRotation = false;
+        rocketBody.freezeRotation = false;  // unfreezes the pyysics rotation system
+
     }
 }

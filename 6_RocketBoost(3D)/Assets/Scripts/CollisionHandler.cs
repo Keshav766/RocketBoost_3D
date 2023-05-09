@@ -29,7 +29,8 @@ public class CollisionHandler : MonoBehaviour
 
     void Update()
     {
-        RespondToDebugKeys();
+        RespondToDebugKeys();   //  CHEATS
+
     }
     void RespondToDebugKeys()
     {
