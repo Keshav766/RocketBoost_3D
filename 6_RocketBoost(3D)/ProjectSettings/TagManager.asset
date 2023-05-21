@@ -7,6 +7,10 @@ TagManager:
   - Obstacle
   - Start
   - Ground
+  - Bullets
+  - Enemy
+  - HeartPickup
+  - PlasmaPickup
   layers:
   - Default
   - TransparentFX
