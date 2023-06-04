@@ -12,7 +12,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float levelTimeDelay = 1f;
     [SerializeField] AudioClip crashClip;
     [SerializeField] AudioClip finishClip;
-
+    [SerializeField] AudioSource audioSource;
     [SerializeField] ParticleSystem crashParticle;
     [SerializeField] ParticleSystem finishParticle;
 
@@ -21,7 +21,7 @@ public class CollisionHandler : MonoBehaviour
     public Image fill;
     public float playerHealth = 5000f;
     float playerMaxHealth = 5000f;
-    AudioSource audioSource;
+    //AudioSource audioSource;
     ParticleSystem rocketParticles;
     Movements movRef;
 
@@ -30,7 +30,7 @@ public class CollisionHandler : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         movRef = FindObjectOfType<Movements>();
     }
 
@@ -66,6 +66,10 @@ public class CollisionHandler : MonoBehaviour
 
     void ProcessHealthBar()
     {
+        if(playerHealth > playerMaxHealth)
+        {
+            playerHealth = playerMaxHealth;
+        }
         float currHealth = playerHealth / playerMaxHealth;
         healthSlider.value = playerHealth;
         fill.color = healthGradient.Evaluate(currHealth);
@@ -89,6 +93,13 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Enemy":
                 ProcessHealth(900f);
+                if (playerHealth <= 0)
+                {
+                    CrashSequence();
+                }
+                break;
+            case "BigPoppa":
+                ProcessHealth(1500f);
                 if (playerHealth <= 0)
                 {
                     CrashSequence();
@@ -126,6 +137,7 @@ public class CollisionHandler : MonoBehaviour
         audioSource.PlayOneShot(finishClip);
         finishParticle.Play();
         GetComponent<Movements>().enabled = false;
+        //gameObject.SetActive(false);
         Invoke("LoadNextLevel", levelTimeDelay);
     }
 
@@ -155,8 +167,14 @@ public class CollisionHandler : MonoBehaviour
             case "HeartPickup":
                 ProcessHealth(-1500);
                 break;
+            case "HeartPickupBig":
+                ProcessHealth(-4500);
+                break;
             case "PlasmaPickup":
                 movRef.bulletCount += 20;
+                break;
+            case "ShortGun":
+                GetComponent<Movements>().shortGunOn = true;
                 break;
         }
     }

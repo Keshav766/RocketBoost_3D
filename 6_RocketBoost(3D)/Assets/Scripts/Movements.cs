@@ -9,25 +9,31 @@ public class Movements : MonoBehaviour
 {
 
     Rigidbody rocketBody;
-    AudioSource rocketAudio;
+    public bool shortGunOn = false;
 
     [SerializeField] float thrustAmount = 1f;
     [SerializeField] float rotationAmount = 1f;
     [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip sideEngine;
+    [SerializeField] AudioClip plasmaBulletSound;
     [SerializeField] public int bulletCount = 20;
 
+    //[SerializeField] AudioSource BGM;
+    [SerializeField] AudioSource mainEngineAudioSource;
+    [SerializeField] AudioSource sideEngineAudioSource;
+    [SerializeField] AudioSource plasmaBulletAudioSource;
     [SerializeField] TMP_Text plasmaBulletText;
     [SerializeField] ParticleSystem leftThrustParticle;
     [SerializeField] ParticleSystem rightThrustParticle;
     [SerializeField] ParticleSystem thrustParticle;
     [SerializeField] GameObject playerBulletRef;
     [SerializeField] GameObject plasmaBullet;
+    [SerializeField] GameObject[] shipBulletRef;
 
     void Start()
     {
         rocketBody = GetComponent<Rigidbody>();
-        rocketAudio = GetComponent<AudioSource>();
-        
+        //mainEngineAudioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -55,6 +61,7 @@ public class Movements : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             RotateLeft();
+           
 
         }
         else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
@@ -70,21 +77,32 @@ public class Movements : MonoBehaviour
 
     void ProcessFiringPlasmaBullets()
     {
-        plasmaBulletText.text = "Plasma : " + bulletCount.ToString();
-        if (Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.Keypad0))
-            {
-                if(bulletCount > 0)
-                {
-                    bulletCount--;
-                    plasmaBulletText.text = "Plasma : " + bulletCount.ToString();
-                    Instantiate(plasmaBullet, playerBulletRef.transform.position, playerBulletRef.transform.rotation);
-                }
-            else
-            {
-                plasmaBulletText.text = "Out of Plasma";
-            }
-
+        if(bulletCount <= 0)
+        {
+            plasmaBulletText.text = "Out of Plasma";
+            return;
         }
+            plasmaBulletText.text = "Plasma : " + bulletCount.ToString();
+            if (Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.Keypad0))
+                {
+                    if(bulletCount > 0)
+                    {
+                        plasmaBulletAudioSource.PlayOneShot(plasmaBulletSound);
+                        if(shortGunOn)
+                        {
+                            bulletCount -= 5;
+                            plasmaBulletText.text = "Plasma : " + bulletCount.ToString();
+                            foreach (GameObject X in shipBulletRef)
+                            { 
+                                Instantiate(plasmaBullet, X.transform.position, X.transform.rotation);
+                            }
+                        }
+                            bulletCount--;
+                            plasmaBulletText.text = "Plasma : " + bulletCount.ToString();
+                            Instantiate(plasmaBullet, playerBulletRef.transform.position, playerBulletRef.transform.rotation);
+                    }
+
+            }
     }
 
     void Thrusting()
@@ -95,14 +113,14 @@ public class Movements : MonoBehaviour
             thrustParticle.Play();
         }
 
-        if (!rocketAudio.isPlaying)
+        if (!mainEngineAudioSource.isPlaying)
         {
-            rocketAudio.PlayOneShot(mainEngine);
+            mainEngineAudioSource.PlayOneShot(mainEngine);
         }
     }
     void StopThrusting()
     {
-        rocketAudio.Stop();
+        mainEngineAudioSource.Stop();
         thrustParticle.Stop();
     }
 
@@ -113,6 +131,10 @@ public class Movements : MonoBehaviour
         {
             leftThrustParticle.Play();
         }
+        if(!sideEngineAudioSource.isPlaying)
+        {
+            sideEngineAudioSource.PlayOneShot(sideEngine);
+        }
     }
     void RotateRight()
     {
@@ -121,12 +143,20 @@ public class Movements : MonoBehaviour
         {
             rightThrustParticle.Play();
         }
+        if (!sideEngineAudioSource.isPlaying)
+        {
+            sideEngineAudioSource.PlayOneShot(sideEngine);
+        }
     }
     void StopRotation()
     {
         leftThrustParticle.Stop();
         rightThrustParticle.Stop();
         //EulerAnglesToQuaternion(transform.rotation, 0, 0, transform.rotation.z);
+        if (sideEngineAudioSource.isPlaying)
+        {
+            sideEngineAudioSource.Stop();
+        }
     }
 
 
@@ -138,19 +168,5 @@ public class Movements : MonoBehaviour
     }
 
 
-    /*void EulerAnglesToQuaternion(Quaternion q, double x, double y, double z)
-    {
-        float cx = (float)Math.Cos(x * 0.5);
-        float cy = (float)Math.Cos(y * 0.5);
-        float cz = (float)Math.Cos(z * 0.5);
-        float sx = (float)Math.Sin(x * 0.5);
-        float sy = (float)Math.Sin(y * 0.5);
-        float sz = (float)Math.Sin(z * 0.5);
-
-        q.w = (cz * cx * cy) + (sz * sx * sy);
-        q.x = (cz * sx * cy) - (sz * cx * sy);
-        q.y = (cz * cx * sy) + (sz * sx * cy);
-        q.z = (sz * cx * cy) - (cz * sx * sy);
-    }
-    */
+   
 }

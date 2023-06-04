@@ -16,7 +16,16 @@ public class BulletController : MonoBehaviour
 
      void OnCollisionEnter(Collision collision)
      {
-        DestroyBullet();
+        switch (collision.gameObject.tag)
+        {
+            case "Bullets":
+            case "Player":
+                return;
+                break;
+            default:
+                DestroyBullet();
+                break;
+        }
      }
     
     void DestroyBullet()

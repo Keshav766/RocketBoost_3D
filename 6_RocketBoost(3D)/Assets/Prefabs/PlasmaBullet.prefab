@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c27ef6c9a6a274c8888276f0014bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 20
+  bulletSpeed: 40
   bulletParticles: {fileID: 2996421566263353403, guid: 56dd4b013d684e045854938683f85a33, type: 3}
   parent: {fileID: 0}
 --- !u!135 &7273271144723714939

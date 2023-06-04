@@ -6,6 +6,8 @@ public class Oscillator : MonoBehaviour
 {
     Vector3 startingPosition;
     [SerializeField] Vector3 movementVector;
+    [SerializeField] Vector3 rotateAmount;
+    [SerializeField] float rotateSpeed;
     [SerializeField] [Range(0,1)]float movementFactor;
     [SerializeField] float period = 2f;
 
@@ -17,7 +19,13 @@ public class Oscillator : MonoBehaviour
 
     void Update()
     {
-        if(period <= Mathf.Epsilon) { return; }
+        PositionOscillator();
+        Rotator();
+    }
+
+    private void PositionOscillator()
+    {
+        if (period <= Mathf.Epsilon) { return; }
         float cycles = Time.time / period; // continually growing over time
 
         const float tau = Mathf.PI * 2; // constant value of 6.2283
@@ -26,7 +34,12 @@ public class Oscillator : MonoBehaviour
 
         movementFactor = (rawSinWave + 1f) / 2f;
 
-        Vector3 offset = movementVector * movementFactor;
-        transform.position = startingPosition + offset;
+        Vector3 positionOffset = movementVector * movementFactor;
+        transform.position = startingPosition + positionOffset;
+    }
+
+    void Rotator()
+    {
+        transform.Rotate(rotateAmount * Time.deltaTime * rotateSpeed);
     }
 }

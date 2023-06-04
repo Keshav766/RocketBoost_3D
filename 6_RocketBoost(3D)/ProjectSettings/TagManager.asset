@@ -11,6 +11,9 @@ TagManager:
   - Enemy
   - HeartPickup
   - PlasmaPickup
+  - HeartPickupBig
+  - ShortGun
+  - BigPoppa
   layers:
   - Default
   - TransparentFX

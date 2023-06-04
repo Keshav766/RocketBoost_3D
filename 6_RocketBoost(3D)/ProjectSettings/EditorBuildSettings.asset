@@ -28,5 +28,20 @@ EditorBuildSettings:
     guid: 63e089a700b243344a32b7435fd4d52a
   - enabled: 1
     path: Assets/Scenes/Level 7.unity
-    guid: 47bb8deec242d3e499cda00e8104839f
+    guid: dcdc09fe1b943844cae45bda76500dbf
+  - enabled: 1
+    path: Assets/Scenes/Level 9.unity
+    guid: c3f1a7bc89249e64c90d68435d226c4a
+  - enabled: 1
+    path: Assets/Scenes/Level 10.unity
+    guid: fdec27411e7cd874197320ad2bbc45bd
+  - enabled: 1
+    path: Assets/Scenes/Level 11.unity
+    guid: fa75253f98cbf1b4e8e6e9fe4d40ec64
+  - enabled: 1
+    path: Assets/Scenes/MegaBossBattle.unity
+    guid: d63d66941a7495942826ae879635f0c1
+  - enabled: 1
+    path: Assets/Scenes/EndCredits.unity
+    guid: d75a282ffe4ab934280a724ca58a9d27
   m_configObjects: {}

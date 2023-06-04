@@ -673,9 +673,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpeed: 30
-  explosionParticle: {fileID: 5437762087189826565, guid: 5de320d504110d848906f70c4ebd16fd, type: 3}
+  explosionParticle: {fileID: 4585840588108944813, guid: 3336fb463d13b5341880968801c51519, type: 3}
+  amIInvisible: 0
+  enemyChilds: []
+  landingPadRef: {fileID: 0}
+  explosionSound: {fileID: 3563746453461641966, guid: 7783310176a006a42b0080c7e16703d3, type: 3}
   enemyHealth: 2000
   enemyMaxHealth: 2000
+  playerDetected: 0
   enemyHealthSlider: {fileID: 700989589}
   fill: {fileID: 844116128}
 --- !u!65 &1371685510

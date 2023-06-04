@@ -88,6 +88,9 @@ public class AnimationScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);    
+        if(other.tag == "Player")
+        {
+            Destroy(gameObject);    
+        }
     }
 }
